@@ -1,7 +1,10 @@
 package com.sol.demo.member.service;
 
 import com.sol.demo.member.Member;
+import com.sol.demo.member.repository.ActionEntity;
 import com.sol.demo.member.repository.MemberEntity;
+
+import java.util.List;
 
 public interface MemberService {
 	//첫 로그인 -> 추후 return 바꿔줘야함.
@@ -13,5 +16,5 @@ public interface MemberService {
 	//첫 로그인시
 	boolean isUser(String id);
 
-	MemberEntity getAction(String userId);
+	List<ActionEntity> getAction(String userId);
 }

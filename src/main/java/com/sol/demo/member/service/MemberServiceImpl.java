@@ -1,54 +1,68 @@
 package com.sol.demo.member.service;
 
 import com.sol.demo.member.Member;
+import com.sol.demo.member.repository.ActionEntity;
+import com.sol.demo.member.repository.JpaActionRepository;
 import com.sol.demo.member.repository.JpaMemberRepository;
 import com.sol.demo.member.repository.MemberEntity;
-import com.sol.demo.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
-  private final JpaMemberRepository jpaMemberRepository;
+  private final JpaMemberRepository memberRepository;
+  private final JpaActionRepository actionRepository;
 
   //legacy
-  private final MemberRepository memberRepository;
+//  private final MemberRepository memberRepository;
 
   //추후 음성 파일을 return 해주는 식으로 각 핸드폰에 넘겨줘야 할듯하다.
   @Override
   public MemberEntity set(Member member) {
-    return jpaMemberRepository.save(
-      new MemberEntity(-1L, member.getId(), member.getAction1(), member.getAction2())
+    var user = memberRepository.save(
+      new MemberEntity(-1L, member.getId())
     );
+
+    var defaultAction1 = new ActionEntity(-1L, user.getId(), 1L, "water please");
+    var defaultAction2 = new ActionEntity(-1L, user.getId(), 2L, "hungry");
+
+    actionRepository.save(defaultAction1);
+    actionRepository.save(defaultAction2);
+
+    return user;
   }
 
   @Override
   public void update(Member.MemberUpdateDto updateDto) {
-    var entity = jpaMemberRepository.findByDeviceId(updateDto.getDeviceId())
-      .orElseThrow(RuntimeException::new);
+    var userId = memberRepository.findByDeviceId(updateDto.getDeviceId())
+      .orElseThrow(RuntimeException::new).getId();
 
-    if(updateDto.getNum() == 1) {
-      entity.setAction1(updateDto.getNewAction());
-    } else if(updateDto.getNum() == 2)
-      entity.setAction2(updateDto.getNewAction());
+    var actionEntity = actionRepository.findByUserIdAndActionNum(userId, updateDto.getActionNum());
+    actionEntity.setActionBody(updateDto.getNewAction());
 
-    jpaMemberRepository.save(entity);
+    actionRepository.save(actionEntity);
+
   }
 
   @Override
   public boolean isUser(String deviceId) {
-    var entityIfExist = jpaMemberRepository.findByDeviceId(deviceId);
+    var entityIfExist = memberRepository.findByDeviceId(deviceId);
 
-    if(entityIfExist.isPresent()) return true;
+    if (entityIfExist.isPresent()) return true;
     return false;
   }
 
   @Override
-  public MemberEntity getAction(String deviceId) {
+  public List<ActionEntity> getAction(String deviceId) {
 
-    return jpaMemberRepository.findByDeviceId(deviceId).orElseThrow(RuntimeException::new);
+    Long userId = memberRepository.findByDeviceId(deviceId).orElseThrow(RuntimeException::new).getId();
+
+    return actionRepository.findAllByUserId(userId);
+
   }
 
 }

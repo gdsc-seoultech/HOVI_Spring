@@ -37,7 +37,7 @@ public class Member {
 	@NoArgsConstructor
 	public static class MemberUpdateDto{
 		String deviceId;
-		int num;
+		Long actionNum;
 		String newAction;
 	}
 

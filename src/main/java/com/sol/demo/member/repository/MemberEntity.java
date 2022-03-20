@@ -17,10 +17,4 @@ public class MemberEntity extends BaseEntity {
 
   private String deviceId;
 
-  @Setter
-  private String action1;
-
-  @Setter
-  private String action2;
-
 }

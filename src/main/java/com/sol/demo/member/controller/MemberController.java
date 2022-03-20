@@ -17,25 +17,24 @@ public class MemberController {
 	private final MemberService memberService;
 
 	@GetMapping("/user/{id}")
-	public boolean isUser(@PathVariable String deviceId){
-		return memberService.isUser(deviceId);
+	public ResponseEntity<?> isUser(@PathVariable String deviceId){
+		return okWithData(memberService.isUser(deviceId), "member present check");
 	}
-
-	@GetMapping("/user_action/{deviceId}")
-	public Member getAction(@PathVariable String deviceId ){
-		return memberService.getAction(deviceId);
-	}
-
 
 	@PostMapping("/set")
 	public ResponseEntity<?> set(@RequestBody Member member){
 
-		return okWithData(memberService.set(member), "유저 등록 성공");
+		return okWithData(memberService.set(member), "user register success");
+	}
+
+	@GetMapping("/user_action/{deviceId}")
+	public ResponseEntity<?> getAction(@PathVariable String deviceId ){
+		return okWithData(memberService.getAction(deviceId), "user all action");
 	}
 
 	@PostMapping("/update")
-	public Member.MemberUpdateDto modify(@RequestBody Member.MemberUpdateDto updateDto){
+	public ResponseEntity<?> modify(@RequestBody Member.MemberUpdateDto updateDto){
 		memberService.update(updateDto);
-		return updateDto;
+		return ok("user action update success");
 	}
 }
