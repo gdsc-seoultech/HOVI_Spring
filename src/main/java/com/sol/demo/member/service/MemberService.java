@@ -13,5 +13,5 @@ public interface MemberService {
 	//첫 로그인시
 	boolean isUser(String id);
 
-	Member getAction(String userId);
+	MemberEntity getAction(String userId);
 }

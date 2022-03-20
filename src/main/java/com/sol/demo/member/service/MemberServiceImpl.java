@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
-  private final MemberRepository memberRepository;
+
   private final JpaMemberRepository jpaMemberRepository;
+
+  //legacy
+  private final MemberRepository memberRepository;
 
   //추후 음성 파일을 return 해주는 식으로 각 핸드폰에 넘겨줘야 할듯하다.
   @Override
@@ -35,13 +38,17 @@ public class MemberServiceImpl implements MemberService {
   }
 
   @Override
-  public boolean isUser(String id) {
-    return memberRepository.isUser(id);
+  public boolean isUser(String deviceId) {
+    var entityIfExist = jpaMemberRepository.findByDeviceId(deviceId);
+
+    if(entityIfExist.isPresent()) return true;
+    return false;
   }
 
   @Override
-  public Member getAction(String userId) {
-    return memberRepository.getAction(userId);
+  public MemberEntity getAction(String deviceId) {
+
+    return jpaMemberRepository.findByDeviceId(deviceId).orElseThrow(RuntimeException::new);
   }
 
 }

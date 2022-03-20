@@ -17,13 +17,13 @@ public class MemberController {
 	private final MemberService memberService;
 
 	@GetMapping("/user/{id}")
-	public boolean isUser(@PathVariable String id){
-		return memberService.isUser(id);
+	public boolean isUser(@PathVariable String deviceId){
+		return memberService.isUser(deviceId);
 	}
 
-	@GetMapping("/user_action/{id}")
-	public Member getAction(@PathVariable String id ){
-		return memberService.getAction(id);
+	@GetMapping("/user_action/{deviceId}")
+	public Member getAction(@PathVariable String deviceId ){
+		return memberService.getAction(deviceId);
 	}
 
 
