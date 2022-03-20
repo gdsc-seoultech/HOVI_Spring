@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface MemberService {
 	//첫 로그인 -> 추후 return 바꿔줘야함.
-	MemberEntity set(Member member);
+	MemberEntity set(String deviceId);
 
 	//
 	void update(Member.MemberUpdateDto updateDto);

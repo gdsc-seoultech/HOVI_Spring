@@ -22,9 +22,12 @@ public class MemberServiceImpl implements MemberService {
 
   //추후 음성 파일을 return 해주는 식으로 각 핸드폰에 넘겨줘야 할듯하다.
   @Override
-  public MemberEntity set(Member member) {
+  public MemberEntity set(String deviceId) {
+
+    //todo :: device Id 이미 있는짖 확인
+
     var user = memberRepository.save(
-      new MemberEntity(-1L, member.getId())
+      new MemberEntity(-1L, deviceId)
     );
 
     var defaultAction1 = new ActionEntity(-1L, user.getId(), 1L, "water please");

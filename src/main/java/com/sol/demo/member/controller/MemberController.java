@@ -9,22 +9,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import static com.sol.demo.member.dto.JsonResponse.okWithData;
-import static org.springframework.http.ResponseEntity.ok;
+import static com.sol.demo.member.dto.JsonResponse.ok;
 
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
 	private final MemberService memberService;
 
-	@GetMapping("/user/{id}")
+	@GetMapping("/user/{deviceId}")
 	public ResponseEntity<?> isUser(@PathVariable String deviceId){
 		return okWithData(memberService.isUser(deviceId), "member present check");
 	}
 
-	@PostMapping("/set")
-	public ResponseEntity<?> set(@RequestBody Member member){
+	@PostMapping("/set/{deviceId}")
+	public ResponseEntity<?> set(@PathVariable String deviceId){
 
-		return okWithData(memberService.set(member), "user register success");
+		return okWithData(memberService.set(deviceId), "user register success");
 	}
 
 	@GetMapping("/user_action/{deviceId}")
