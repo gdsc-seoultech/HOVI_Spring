@@ -25,8 +25,8 @@ public class MemoryMemberRepository implements MemberRepository {
 
 	@Override
 	public void update(Member.MemberUpdateDto updateDto) {
-		store.get(updateDto.getId()).set(updateDto.getNum(), updateDto.getNewAction());
-		print(updateDto.getId());
+//		store.get(updateDto.getId()).set(updateDto.getNum(), updateDto.getNewAction());
+//		print(updateDto.getId());
 	}
 
 	@Override

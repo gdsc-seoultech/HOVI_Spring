@@ -1,10 +1,15 @@
 package com.sol.demo.member.controller;
 
 import com.sol.demo.member.Member;
+import com.sol.demo.member.dto.JsonResponse;
 import com.sol.demo.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import static com.sol.demo.member.dto.JsonResponse.okWithData;
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,10 +28,9 @@ public class MemberController {
 
 
 	@PostMapping("/set")
-	public Member set(@RequestBody Member member){
+	public ResponseEntity<?> set(@RequestBody Member member){
 
-		memberService.set(member);
-		return member;
+		return okWithData(memberService.set(member), "유저 등록 성공");
 	}
 
 	@PostMapping("/update")

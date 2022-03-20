@@ -36,7 +36,7 @@ public class Member {
 	@Setter
 	@NoArgsConstructor
 	public static class MemberUpdateDto{
-		String id;
+		String deviceId;
 		int num;
 		String newAction;
 	}
@@ -47,4 +47,8 @@ public class Member {
 	public static class IsMemberDto{
 		String id;
 	}
+}
+
+enum Action{
+	Action1, Action2
 }
