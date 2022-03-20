@@ -1,6 +1,5 @@
 package com.sol.demo.member;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,13 +39,6 @@ public class Member {
 		String id;
 		int num;
 		String newAction;
-	}
-
-	@Getter
-	@Setter
-	@NoArgsConstructor
-	public static class IsMemberDto{
-		String id;
 	}
 
 	@Getter
